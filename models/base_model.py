@@ -9,6 +9,8 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key == "id":
                     setattr(self, key, value)
+                elif key == "__class__":
+                    continue
                 else:
                     setattr(self, key, datetime.datetime.fromisoformat(value))
         else:
