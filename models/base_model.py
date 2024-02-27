@@ -7,7 +7,7 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         if kwargs is not None:
             for key, value in kwargs.items():
-                if key is "id":
+                if key == "id":
                     setattr(self, key, value)
                 else:
                     setattr(self, key, datetime.datetime.fromisoformat(value))
