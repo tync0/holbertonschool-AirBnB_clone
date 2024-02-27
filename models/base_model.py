@@ -5,9 +5,9 @@ import datetime
 
 class BaseModel:
     def __init__(self, *args, **kwargs):
-        if kwargs:
+        if kwargs is not None:
             for key, value in kwargs.items():
-                if key is not "id":
+                if key is "id":
                     setattr(self, key, value)
                 else:
                     setattr(self, key, datetime.datetime.fromisoformat(value))
