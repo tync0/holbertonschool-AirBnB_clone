@@ -4,10 +4,17 @@ import datetime
 
 
 class BaseModel:
-    def __init__(self):
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.datetime.now()
-        self.updated_at = datetime.datetime.now()
+    def __init__(self, *args, **kwargs):
+        if kwargs:
+            for key, value in kwargs.items():
+                if key is not "id":
+                    setattr(self, key, value)
+                else:
+                    setattr(self, key, datetime.datetime.fromisoformat(value))
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.datetime.now()
+            self.updated_at = datetime.datetime.now()
 
     def save(self):
         self.updated_at = datetime.datetime.now()
