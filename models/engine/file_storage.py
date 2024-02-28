@@ -21,5 +21,5 @@ class FileStorage:
                 FileStorage.__objects = json.load(f)
 
     def new(self, obj):
-        key = "{}.{}".format(obj.__class__.name, obj.id)
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[key] = obj.to_dict()
