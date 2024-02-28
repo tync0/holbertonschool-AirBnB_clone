@@ -16,10 +16,9 @@ class FileStorage:
             json.dump(f, FileStorage.__objects)
 
     def reload(self):
-        file = FileStorage.__file_path
-        if path.exists(file):
-            with open(file, "r") as f:
-                FileStorage.__objects = json.dump(f)
+        if path.exists(FileStorage.__file_path):
+            with open(FileStorage.__file_path, "r") as f:
+                FileStorage.__objects = json.load(f)
 
     def new(self, obj):
         key = "{}.{}".format(obj.__class__.name, obj.id)
