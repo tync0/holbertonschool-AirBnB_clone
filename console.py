@@ -7,19 +7,29 @@ This module contains the entry point of the command interpreter.
 
 
 class HBNBCommand(cmd.Cmd):
-    """Simple command processor example."""
+    """
+    This class represents the command-line interface for the AirBnB clone.
+    It provides various commands for interacting with the application.
+    """
 
     prompt = "(hbnb) "
 
-    def do_EOF(self, args):
-        """Quit command to exit the program"""
+    def do_quit(self, args):
+        """
+        Quit the command-line interface.
+        """
         return True
 
-    def do_quit(self, agrs):
-        """Quit command to exit the program"""
+    def do_EOF(self, args):
+        """
+        Handle the end-of-file signal.
+        """
         return True
 
     def emptyline(self):
+        """
+        Do nothing when an empty line is entered.
+        """
         pass
 
 
