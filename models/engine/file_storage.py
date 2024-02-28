@@ -12,8 +12,11 @@ class FileStorage:
         return self.__objects
 
     def save(self):
+        data = {}
+        for key, value in FileStorage.__objects.items():
+            data[key] = value.to_dict()
         with open(FileStorage.__file_path, "w") as f:
-            json.dump(FileStorage.__objects, f)
+            json.dump(data, f)
 
     def reload(self):
         try:
