@@ -26,12 +26,6 @@ class HBNBCommand(cmd.Cmd):
         """
         return True
 
-    def do_help(self, args):
-        """
-        Display help information about a specific command
-        """
-        cmd.Cmd.do_help(self, args)
-
     def emptyline(self):
         """
         Do nothing when an empty line is entered.
