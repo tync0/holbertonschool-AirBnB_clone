@@ -13,7 +13,7 @@ class FileStorage:
 
     def save(self):
         with open(FileStorage.__file_path, "w") as f:
-            json.dump(f, FileStorage.__objects)
+            json.dump(FileStorage.__objects, f)
 
     def reload(self):
         if path.exists(FileStorage.__file_path):
