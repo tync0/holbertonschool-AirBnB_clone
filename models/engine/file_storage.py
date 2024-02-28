@@ -13,7 +13,7 @@ class FileStorage:
     def save(self):
         data = {}
         for key, value in FileStorage.__objects.items():
-            data[key] = value.to_dict()
+            data[key] = value
         with open(FileStorage.__file_path, "w") as f:
             json.dump(data, f)
 
