@@ -97,7 +97,7 @@ class HBNBCommand(cmd.Cmd):
         elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         else:
-            key = args[1]
+            key = args[0]
             print(
                 [
                     str(value)
