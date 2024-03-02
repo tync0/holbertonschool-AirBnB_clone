@@ -65,9 +65,9 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         else:
-        new = HBNBCommand.All_class_dict[arg[0]]()
-        new.save()
-        print(new.id)
+            new = HBNBCommand.All_class_dict[arg[0]]()
+            new.save()
+            print(new.id)
 
     def do_show(self, line):
         """
@@ -84,13 +84,13 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         else:
-		storage.reload()
-        obj = storage.all()
-        obj_key = arg[0] + "." + arg[1]
-        if obj_key in obj:
-            print(str(obj[obj_key]))
-        else:
-            print("** no instance found **")
+		    storage.reload()
+            obj = storage.all()
+            obj_key = arg[0] + "." + arg[1]
+            if obj_key in obj:
+                print(str(obj[obj_key]))
+            else:
+                print("** no instance found **")
 
     def do_destroy(self, line):
         """
@@ -107,14 +107,14 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
 			return
         else:
-        storage.reload()
-        obj = storage.all()
-        obj_key = arg[0] + "." + arg[1]
-        if obj_key in obj:
-            del obj[obj_key]
-            storage.save()
-        else:
-            print("** no instance found **")
+            storage.reload()
+            obj = storage.all()
+            obj_key = arg[0] + "." + arg[1]
+            if obj_key in obj:
+                del obj[obj_key]
+                storage.save()
+            else:
+                print("** no instance found **")
 
     def do_all(self, line):
         """
@@ -174,7 +174,7 @@ class HBNBCommand(cmd.Cmd):
             obj_dict[arg[2]] = type(obj_dict[arg[2]])(arg[3])
         else:
             obj_dict[arg[2]] = arg[3]
-        storage.save()
+            storage.save()
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
