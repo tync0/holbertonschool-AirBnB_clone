@@ -1,50 +1,92 @@
 #!/usr/bin/python3
+
+import os
 import unittest
+
+from models import storage
 from models.place import Place
-"""
-Unittest Module for Place class
-"""
 
 
-class TestUser(unittest.TestCase):
-    ''' Unittest for Place class '''
+class TestPlace(unittest.TestCase):
+    """
+    This class contains unit tests for the Place class.
+    """
 
-    def test_object_Instantiation(self):
-        ''' instantiates class '''
-        self.place = Place()
+    def setUp(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
 
-    def testattr(self):
-        ''' test Class: Place attributes '''
-        self.place = Place()
-        self.assertTrue(hasattr(self.place, "created_at"))
-        self.assertTrue(hasattr(self.place, "updated_at"))
-        self.assertFalse(hasattr(self.place, "random_attr"))
-        self.assertTrue(hasattr(self.place, "name"))
-        self.assertTrue(hasattr(self.place, "id"))
-        self.assertEqual(self.place.name, "")
-        self.assertEqual(self.place.city_id, "")
-        self.assertEqual(self.place.user_id, "")
-        self.assertEqual(self.place.description, "")
-        self.assertEqual(self.place.number_rooms, 0)
-        self.assertEqual(self.place.number_bathrooms, 0)
-        self.assertEqual(self.place.max_guest, 0)
-        self.assertEqual(self.place.price_by_night, 0)
-        self.assertEqual(self.place.latitude, 0.0)
-        self.assertEqual(self.place.longtude, 0.0)
-        self.assertEqual(self.place.amenity_ids, [])
+        storage.__objects = {}
 
-    def testsave(self):
-        ''' testing method: save '''
-        self.place = Place()
-        self.place.save()
-        self.assertTrue(hasattr(self.place, "updated_at"))
+    def test_check_type(self):
+        self.assertIsInstance(Place.city_id, str)
+        self.assertIsInstance(Place.user_id, str)
+        self.assertIsInstance(Place.name, str)
+        self.assertIsInstance(Place.description, str)
+        self.assertIsInstance(Place.number_rooms, int)
+        self.assertIsInstance(Place.number_bathrooms, int)
+        self.assertIsInstance(Place.max_guest, int)
+        self.assertIsInstance(Place.price_by_night, int)
+        self.assertIsInstance(Place.price_by_night, int)
+        self.assertIsInstance(Place.latitude, float)
+        self.assertIsInstance(Place.longitude, float)
+        self.assertIsInstance(Place.amenity_ids, list)
 
-    def teststr(self):
-        ''' testing __str__ return format of BaseModel '''
-        self.place = Place()
-        s = "[{}] ({}) {}".format(self.place.__class__.__name__,
-                                  str(self.place.id), self.place.__dict__)
-        self.assertEqual(print(s), print(self.place))
+    def test_city_id(self):
+        place_model = Place()
+        place_model.city_id = "123"
+        self.assertEqual(place_model.city_id, "123")
 
-if __name__ == '__main__':
-    unittest.main()
+    def test_user_id(self):
+        place_model = Place()
+        place_model.user_id = "123"
+        self.assertEqual(place_model.user_id, "123")
+
+    def test_name(self):
+        place_model = Place()
+        place_model.name = "Test"
+        self.assertEqual(place_model.name, "Test")
+
+    def test_description(self):
+        place_model = Place()
+        place_model.description = "Test"
+        self.assertEqual(place_model.description, "Test")
+
+    def test_number_rooms(self):
+        place_model = Place()
+        place_model.number_rooms = 2
+        self.assertEqual(place_model.number_rooms, 2)
+
+    def test_number_bathrooms(self):
+        place_model = Place()
+        place_model.number_bathrooms = 2
+        self.assertEqual(place_model.number_bathrooms, 2)
+
+    def test_max_guest(self):
+        place_model = Place()
+        place_model.max_guest = 2
+        self.assertEqual(place_model.max_guest, 2)
+
+    def test_price_by_night(self):
+        place_model = Place()
+        place_model.price_by_night = 2
+        self.assertEqual(place_model.price_by_night, 2)
+
+    def test_latitude(self):
+        place_model = Place()
+        place_model.latitude = 2.2
+        self.assertEqual(place_model.latitude, 2.2)
+
+    def test_longitude(self):
+        place_model = Place()
+        place_model.longitude = 2.2
+        self.assertEqual(place_model.longitude, 2.2)
+
+    def test_amenity_ids(self):
+        place_model = Place()
+        place_model.amenity_ids = [1, 2]
+        self.assertEqual(place_model.amenity_ids, [1, 2])
+
+# test_place.py
