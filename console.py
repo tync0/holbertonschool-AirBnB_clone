@@ -6,7 +6,6 @@ import cmd
 import json
 import shlex
 from models.base_model import BaseModel
-from models.base_model import BaseModel
 from models.user import User
 from models.state import State
 from models.city import City
@@ -95,7 +94,6 @@ class HBNBCommand(cmd.Cmd):
         """
         Delete an instance of BaseModel based on id
         """
-
         arg = shlex.split(args)
         if len(arg) == 0:
             print("** class name missing **")
@@ -127,7 +125,7 @@ class HBNBCommand(cmd.Cmd):
                 json_dict.append(str(value))
             print(json.dumps(json_dict))
             return
-        arg = shlex.split(args)
+        arg = shlex.split(line)
         if arg[0] in HBNBCommand.All_class_dict.keys():
             for key, value in obj_dict.items():
                 if arg[0] in key:
