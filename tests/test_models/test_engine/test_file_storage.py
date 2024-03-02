@@ -1,64 +1,45 @@
-#!/usr/bin/python3
-
+import json
 import os
 import unittest
 
-from models import storage
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
 
 class TestFileStorage(unittest.TestCase):
-    """
-    This class contains unit tests for the FileStorage class.
-    """
+    def setUp(self) -> None:
+        self.file_storage = FileStorage()
+        self.model = BaseModel()
 
-    def setUp(self):
+    def tearDown(self) -> None:
         try:
-            os.remove("file.json")
+            os.remove(self.file_storage._FileStorage__file_path)
+            self.file_storage._FileStorage__objects.clear()
         except IOError:
             pass
 
-        storage.__objects = {}
+    def test_new(self):
+        self.file_storage.new(self.model)
+        self.assertIn('BaseModel.' + self.model.id, self.file_storage.all())
 
-    def test_check_type(self):
-        self.assertIsInstance(FileStorage._FileStorage__file_path, str)
-        self.assertIsInstance(FileStorage._FileStorage__objects, dict)
+    def test_save(self):
+        self.file_storage.new(self.model)
+        self.file_storage.save()
+        self.assertTrue(os.path.exists(self.file_storage._FileStorage__file_path))
 
-    def test_storage_all(self):
-        obj1 = BaseModel()
-        obj2 = BaseModel()
-        storage.new(obj1)
-        storage.new(obj2)
+        with open(self.file_storage._FileStorage__file_path) as f:
+            data = json.load(f)
+            self.assertIn('BaseModel.' + self.model.id, data)
 
-        all_objects = storage.all()
+    def test_reload(self):
+        self.file_storage.new(self.model)
+        self.file_storage.save()
+        self.file_storage._FileStorage__objects = {}
+        self.assertTrue(os.path.exists(self.file_storage._FileStorage__file_path))
+        self.file_storage.reload()
+        self.assertIn('BaseModel.' + self.model.id, self.file_storage._FileStorage__objects)
 
-        self.assertIn(obj1, all_objects.values())
-        self.assertIn(obj2, all_objects.values())
-
-    def test_storage_new(self):
-        obj = BaseModel()
-        storage.new(obj)
-
-        self.assertIn(obj, storage.all().values())
-
-    def test_storage_save(self):
-        obj = BaseModel()
-
-        storage.new(obj)
-        storage.save()
-
-        with open("file.json", "r") as f:
-            text = f.read()
-            self.assertIn("BaseModel." + obj.id, text)
-
-    def test_storage_reload(self):
-        obj = BaseModel()
-
-        storage.save()
-        storage.objects = {}
-        storage.reload()
-
-        self.assertNotEqual(len(storage.objects), 0)
-
-# test_file_stoarage.py
+    def test_file_path(self):
+        self.file_storage.new(self.model)
+        self.file_storage.save()
+        self.assertTrue(os.path.exists(self.file_storage._FileStorage__file_path))
