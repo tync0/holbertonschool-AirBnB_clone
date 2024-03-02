@@ -53,44 +53,43 @@ class HBNBCommand(cmd.Cmd):
         """
         pass
 
-    def do_create(self, line):
+    def do_create(self, args):
         """
         Create an instance of BaseModel
         """
-        args = line.split()
-        if len(args) == 0:
+        if args == "":
             print("** class name missing **")
             return
-        elif args[0] not in HBNBCommand.All_class_dict:
+        arg = shlex.split(args)
+        if arg[0] not in HBNBCommand.All_class_dict:
             print("** class doesn't exist **")
             return
-        else:
-            new = HBNBCommand.All_class_dict[args[0]]()
-            new.save()
-            print(new.id)
+        new = HBNBCommand.All_class_dict[arg[0]]()
+        new.save()
+        print(new.id)
 
-    def do_show(self, line):
+    def do_show(self, args):
         """
         Show an instance of BaseModel based on id
         """
-        arg = shlex.split(line)
-        if len(args) == 0:
+
+        arg = shlex.split(args)
+        if len(arg) == 0:
             print("** class name missing **")
             return
-        elif args[0] not in HBNBCommand.All_class_dict:
+        if arg[0] not in HBNBCommand.All_class_dict:
             print("** class doesn't exist **")
             return
-        elif len(args) < 2:
+        if len(arg) < 2:
             print("** instance id missing **")
             return
+        storage.reload()
+        obj = storage.all()
+        obj_key = arg[0] + "." + arg[1]
+        if obj_key in obj:
+            print(str(obj[obj_key]))
         else:
-            storage.reload()
-            obj = storage.all()
-            obj_key = arg[0] + "." + arg[1]
-            if obj_key in obj:
-                print(str(obj[obj_key]))
-            else:
-                print("** no instance found **")
+            print("** no instance found **")
 
     def do_destroy(self, args):
         """
