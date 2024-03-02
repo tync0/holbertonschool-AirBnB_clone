@@ -4,7 +4,7 @@ from models.base_model import BaseModel
 import os
 
 class FileStorage:
-    __file_path = "file.json"
+    __file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "file.json"))
     __objects = {}
 
     def all(self):
