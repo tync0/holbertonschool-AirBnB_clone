@@ -96,25 +96,25 @@ class HBNBCommand(cmd.Cmd):
         """
         Delete an instance of BaseModel based on id
         """
+
         arg = shlex.split(args)
         if len(arg) == 0:
             print("** class name missing **")
             return
-        elif arg[0] not in HBNBCommand.All_class_dict:
+        if arg[0] not in HBNBCommand.All_class_dict:
             print("** class doesn't exist **")
             return
-        elif len(arg) < 2:
+        if len(arg) < 2:
             print("** instance id missing **")
             return
+        storage.reload()
+        obj = storage.all()
+        obj_key = arg[0] + "." + arg[1]
+        if obj_key in obj:
+            del obj[obj_key]
+            storage.save()
         else:
-            storage.reload()
-            obj = storage.all()
-            obj_key = arg[0] + "." + arg[1]
-            if obj_key in obj:
-                del obj[obj_key]
-                storage.save()
-            else:
-                print("** no instance found **")
+            print("** no instance found **")
 
     def do_all(self, line):
         """
