@@ -92,11 +92,11 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
-    def do_destroy(self, line):
+    def do_destroy(self, args):
         """
         Delete an instance of BaseModel based on id
         """
-        arg = shlex.split(line)
+        arg = shlex.split(args)
         if len(arg) == 0:
             print("** class name missing **")
             return
