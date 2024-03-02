@@ -1,7 +1,3 @@
-Certainly! Below is a sample README.md for your project based on the provided information:
-
----
-
 # Holberton School - AirBnB Clone
 
 ## Description
