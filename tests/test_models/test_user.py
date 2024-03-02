@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+""" holds class User"""
 import unittest
 from models.user import User
 
