@@ -65,7 +65,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         else:
-            new = HBNBCommand.All_class_dict[arg[0]]()
+            new = HBNBCommand.All_class_dict[args[0]]()
             new.save()
             print(new.id)
 
