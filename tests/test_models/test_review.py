@@ -1,46 +1,41 @@
 #!/usr/bin/python3
 import unittest
-from models.city import City
+from models.review import Review
 """
-Unittest Module for City class
+Unittest Module for Review class
 """
 
 
 class TestUser(unittest.TestCase):
-    ''' Unittest for City class '''
+    ''' Unittest for Review class '''
 
     def test_object_Instantiation(self):
         ''' instantiates class '''
-        self.city = City()
+        self.review = Review()
 
     def testattr(self):
-        ''' test Class: City attributes '''
-        self.city = City()
-        self.assertTrue(hasattr(self.city, "created_at"))
-        self.assertTrue(hasattr(self.city, "updated_at"))
-        self.assertFalse(hasattr(self.city, "random_attr"))
-        self.assertTrue(hasattr(self.city, "name"))
-        self.assertTrue(hasattr(self.city, "id"))
-        self.assertEqual(self.city.name, "")
-        self.assertEqual(self.city.state_id, "")
-        self.city.name = "WonderLand"
-        self.city.state_id = "Won67L0nd"
-        self.assertEqual(self.city.name, "WonderLand")
-        self.assertEqual(self.city.state_id, "Won67L0nd")
-        self.assertEqual(self.city.__class__.__name__, "City")
+        ''' test Class: Review attributes '''
+        self.review = Review()
+        self.assertTrue(hasattr(self.review, "created_at"))
+        self.assertTrue(hasattr(self.review, "updated_at"))
+        self.assertFalse(hasattr(self.review, "random_attr"))
+        self.assertTrue(hasattr(self.review, "text"))
+        self.assertTrue(hasattr(self.review, "id"))
+        self.assertEqual(self.review.text, "")
+        self.assertEqual(self.review.__class__.__name__, "Review")
 
     def testsave(self):
         ''' testing method: save '''
-        self.city = City()
-        self.city.save()
-        self.assertTrue(hasattr(self.city, "updated_at"))
+        self.review = Review()
+        self.review.save()
+        self.assertTrue(hasattr(self.review, "updated_at"))
 
     def teststr(self):
         ''' testing __str__ return format of BaseModel '''
-        self.city = City()
-        s = "[{}] ({}) {}".format(self.city.__class__.__name__,
-                                  str(self.city.id), self.city.__dict__)
-        self.assertEqual(print(s), print(self.city))
+        self.review = Review()
+        s = "[{}] ({}) {}".format(self.review.__class__.__name__,
+                                  str(self.review.id), self.review.__dict__)
+        self.assertEqual(print(s), print(self.review))
 
 if __name__ == '__main__':
     unittest.main()
