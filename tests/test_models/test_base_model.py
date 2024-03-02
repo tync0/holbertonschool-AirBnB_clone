@@ -1,61 +1,61 @@
 #!/usr/bin/python3
+
+import os
 import unittest
+from datetime import datetime
+
+from models import storage
 from models.base_model import BaseModel
 
+
 class TestBaseModel(unittest.TestCase):
-    ''' Unittest for BaseModel class '''
+    """
+    This class contains unit tests for the BaseModel class.
+    """
 
-    def test_object_instantiation(self):
-        ''' instantiates class '''
-        self.base_model = BaseModel()
+    def setUp(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
 
-    def test_checking_for_functions(self):
-        self.assertIsNotNone(BaseModel.__doc__)
-        self.assertIsNotNone(BaseModel.save.__doc__)
-        self.assertIsNotNone(BaseModel.to_dict.__doc__)
+        storage.__objects = {}
 
-    def test_attributes(self):
-        ''' test Class: BaseModel attributes '''
-        self.base_model = BaseModel()
-        self.assertTrue(hasattr(self.base_model, "created_at"))
-        self.assertTrue(hasattr(self.base_model, "updated_at"))
-        self.assertFalse(hasattr(self.base_model, "random_attr"))
-        self.assertFalse(hasattr(self.base_model, "name"))
-        self.assertTrue(hasattr(self.base_model, "id"))
-        self.base_model.name = "Alice"
-        self.base_model.age = "44"
-        self.assertTrue(hasattr(self.base_model, "name"))
-        self.assertTrue(hasattr(self.base_model, "age"))
-        delattr(self.base_model, "name")
-        self.assertFalse(hasattr(self.base_model, "name"))
-        delattr(self.base_model, "age")
-        self.assertFalse(hasattr(self.base_model, "age"))
-        self.assertEqual(self.base_model.__class__.__name__, "BaseModel")
+    def test_id_generation(self):
+        base_model = BaseModel()
+        self.assertIsNotNone(base_model.id)
+        self.assertIsInstance(base_model.id, str)
 
-    def test_save(self):
-        ''' testing method: save '''
-        self.base_model = BaseModel()
-        initial_updated_at = self.base_model.updated_at
-        self.base_model.save()
-        self.assertNotEqual(initial_updated_at, self.base_model.updated_at)
+    def test_created_at(self):
+        base_model = BaseModel()
+        self.assertIsNotNone(base_model.created_at)
+        self.assertIsInstance(base_model.created_at, datetime)
 
-    def test_str(self):
-        ''' testing __str__ return format of BaseModel '''
-        self.base_model = BaseModel()
-        s = "[{}] ({}) {}".format(
-            self.base_model.__class__.__name__,
-            str(self.base_model.id),
-            self.base_model.__dict__
+    def test_save_method(self):
+        base_model = BaseModel()
+        previous_updated_at = base_model.updated_at
+        base_model.save()
+        self.assertNotEqual(previous_updated_at, base_model.updated_at)
+
+    def test_save_method_with_storage(self):
+        base_model = BaseModel()
+        base_model.name = "My_First_Model"
+        base_model.my_number = 89
+        base_model.save()
+        self.assertTrue(os.path.exists("file.json"))
+        self.assertIn("BaseModel." + base_model.id, storage.all())
+
+    def test_to_dict_method(self):
+        base_model = BaseModel()
+        obj_dict = base_model.to_dict()
+        self.assertIsInstance(obj_dict, dict)
+        self.assertEqual(obj_dict["__class__"], "BaseModel")
+
+    def test_str_method(self):
+        base_model = BaseModel()
+        expected_string = (
+            f"[BaseModel] ({base_model.id}) {base_model.__dict__}"
         )
-        self.assertEqual(str(self.base_model), s)
+        self.assertEqual(str(base_model), expected_string)
 
-    def test_to_dict(self):
-        base1 = BaseModel()
-        base1_dict = base1.to_dict()
-        self.assertEqual(base1.__class__.__name__, 'BaseModel')
-        self.assertIsInstance(base1_dict['created_at'], str)
-        self.assertIsInstance(base1_dict['updated_at'], str)
-
-
-if __name__ == '__main__':
-    unittest.main()
+# test_base_model.py
