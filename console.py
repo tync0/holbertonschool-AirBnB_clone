@@ -84,7 +84,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         else:
-		    storage.reload()
+            storage.reload()
             obj = storage.all()
             obj_key = arg[0] + "." + arg[1]
             if obj_key in obj:
@@ -99,13 +99,13 @@ class HBNBCommand(cmd.Cmd):
         arg = shlex.split(line)
         if len(arg) == 0:
             print("** class name missing **")
-			return
+            return
         elif arg[0] not in HBNBCommand.All_class_dict:
             print("** class doesn't exist **")
-			return
+            return
         elif len(arg) < 2:
             print("** instance id missing **")
-			return
+            return
         else:
             storage.reload()
             obj = storage.all()
